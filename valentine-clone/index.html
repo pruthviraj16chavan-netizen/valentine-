@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#4a0d16,#6b0f1a);
+font-family:'Playfair Display', serif;
+overflow:hidden;
+}
+
+.card{
+width:380px;
+background:#fce4ec;
+border-radius:20px;
+padding:30px 25px;
+text-align:center;
+box-shadow:0 20px 35px rgba(0,0,0,0.4);
+position:relative;
+animation:fadeIn .5s ease;
+}
+
+img{width:160px;margin-bottom:15px;}
+h1{color:#c2185b;font-size:24px;margin:8px 0;}
+p{color:#880e4f;font-size:14px;}
+
+button{
+padding:10px 25px;
+border:none;
+border-radius:30px;
+font-size:14px;
+cursor:pointer;
+margin:6px;
+}
+
+.yes{background:#ff4081;color:white;}
+.no{background:white;color:#c2185b;}
+.hidden{display:none;}
+
+.leaf{position:absolute;width:110px;opacity:.9;pointer-events:none;}
+.top-left{top:0;left:0;}
+.top-right{top:0;right:0;transform:rotate(90deg);}
+.bottom-left{bottom:0;left:0;transform:rotate(270deg);}
+.bottom-right{bottom:0;right:0;transform:rotate(180deg);}
+
+.option{
+display:flex;
+align-items:center;
+background:#ffe6f0;
+padding:12px;
+margin:10px 0;
+border-radius:40px;
+cursor:pointer;
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
+transform:translateX(-80%);
+opacity:0;
+animation:slideIn .5s forwards;
+}
+
+.option:nth-child(1){animation-delay:.2s;}
+.option:nth-child(2){animation-delay:.4s;}
+.option:nth-child(3){animation-delay:.6s;}
+.option:nth-child(4){animation-delay:.8s;}
+
+.circle{
+width:35px;height:35px;border-radius:50%;
+background:#ff1493;color:white;
+display:flex;justify-content:center;align-items:center;
+margin-right:12px;font-weight:bold;
+}
+
+.note{font-size:12px;margin-top:8px;color:#d81b60;}
+
+@keyframes slideIn{
+to{transform:translateX(0);opacity:1;}
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:scale(.95);}
+to{opacity:1; transform:scale(1);}
+}
+
+.glow{box-shadow:0 0 15px #ff4da6,0 0 25px #ff80bf inset;}
+
+.langBox{
+background:#ffd9e6;
+padding:10px;
+margin:8px 0;
+border-radius:25px;
+color:#b30059;
+font-size:14px;
+}
+
+.hearts span{
+position:absolute;
+bottom:-20px;
+color:#ff4d88;
+font-size:18px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-500px);opacity:0;}
+}
+
+.sparkle{
+position:absolute;width:4px;height:4px;
+background:white;border-radius:50%;
+animation:spark 2s infinite;
+}
+@keyframes spark{
+0%{opacity:0;}
+50%{opacity:1;}
+100%{opacity:0;}
+}
+
+.big{
+font-size:24px;
+color:#c2185b;
+margin-top:20px;
+}
+
+.signature{
+position:absolute;
+right:15px;
+bottom:10px;
+font-size:12px;
+color:#c2185b;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<!-- SCREEN 1 -->
+<div class="card" id="screen1">
+<img src="panda1.png">
+<h1>Hey!</h1>
+<p>Can I ask you something?</p>
+<button class="yes" onclick="goYes()">YES</button>
+<button class="no" onclick="goNo()">NO</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="card hidden" id="screen2">
+<img src="cat.png">
+<h1>How Dare You!</h1>
+<p>You must say YES 😡</p>
+<button class="yes" onclick="back()">Go Back</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="card hidden" id="screen3">
+<img src="leaf.png" class="leaf top-left">
+<img src="leaf.png" class="leaf top-right">
+<img src="leaf.png" class="leaf bottom-left">
+<img src="leaf.png" class="leaf bottom-right">
+<img src="panda2.gif">
+<h1 id="typing"></h1>
+<div id="options" class="hidden">
+<div class="option" onclick="selectOption()"><span class="circle">A</span><span>Yes</span></div>
+<div class="option" onclick="selectOption()"><span class="circle">B</span><span>Definitely</span></div>
+<div class="option" onclick="selectOption()"><span class="circle">C</span><span>Of Course</span></div>
+<div class="option" onclick="selectOption()"><span class="circle">D</span><span>Always Yes</span></div>
+<p class="note">Pick any option... all mean YES 💖</p>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="card glow hidden" id="screen4">
+<h1>This is for you 😍 😁</h1>
+<img src="rose.png" style="width:170px;">
+<div class="langBox"><small>ENGLISH</small><br><b>I Love You</b></div>
+<div class="langBox"><small>URDU</small><br>میں تم سے پیار کرتا ہوں</div>
+<div class="langBox"><small>HINDI</small><br>मैं तुमसे प्यार करता हूँ</div>
+<div class="langBox"><small>FRENCH</small><br>Je T'aime</div>
+<div class="langBox"><small>SPANISH</small><br>Te Amo</div>
+<div class="option" onclick="openLetter()">💌 A Letter For You</div>
+<div class="hearts"></div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="card glow hidden" id="screen5">
+<h1>My Dearest Valentine 💕</h1>
+<p id="letterText"></p>
+<div class="big">Forever Yours ❤️</div>
+<div class="signature">for purvi ❤️</div>
+</div>
+
+<script>
+let currentPage=1;
+
+function show(page){
+document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));
+document.getElementById("screen"+page).classList.remove("hidden");
+currentPage=page;
+history.pushState({page:page},"");
+}
+
+function goNo(){show(2);}
+function back(){show(1);}
+function goYes(){show(3);typeText();}
+
+function selectOption(){show(4);startHearts();}
+function openLetter(){show(5);sparkles();typeLetter();}
+
+/* BACK BUTTON */
+window.onpopstate=function(e){
+if(e.state && e.state.page){
+document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));
+document.getElementById("screen"+e.state.page).classList.remove("hidden");
+currentPage=e.state.page;
+}
+};
+
+/* TEXT TYPE */
+function typeText(){
+typingEl.innerHTML="";
+let text="Will you be my Valentine? ❤️";
+let i=0;
+(function t(){
+if(i<text.length){typingEl.innerHTML+=text[i++];setTimeout(t,50);}
+else options.classList.remove("hidden");
+})();
+}
+
+/* HEART FLOAT */
+function startHearts(){
+let container=document.querySelector(".hearts");
+container.innerHTML="";
+for(let i=0;i<20;i++){
+let h=document.createElement("span");
+h.innerHTML="❤";
+h.style.left=Math.random()*100+"%";
+h.style.animationDelay=Math.random()*5+"s";
+container.appendChild(h);
+}
+}
+
+/* LETTER */
+function typeLetter(){
+letterText.innerHTML="";
+let msg=`From the moment you walked into my life, everything became more beautiful.
+
+Your smile lights up my darkest days, and your love makes me feel like the luckiest person in the world.
+
+Every moment with you is a treasure I hold close to my heart.
+
+You are my best friend, my soulmate, and my forever love.
+
+On this Valentine's Day and every day after,
+I promise to cherish you, to make you laugh, and to love you with all my heart.`;
+
+let i=0;
+(function t(){
+if(i<msg.length){letterText.innerHTML+=msg[i++];setTimeout(t,30);}
+})();
+}
+
+/* SPARKLES */
+function sparkles(){
+for(let i=0;i<40;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+}
+}
+
+/* MUSIC AUTOPLAY */
+document.body.addEventListener("click",()=>{
+document.getElementById("bgMusic").play().catch(()=>{});
+},{once:true});
+
+let typingEl=document.getElementById("typing");
+let options=document.getElementById("options");
+</script>
+
+</body>
+</html>
